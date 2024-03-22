@@ -16,11 +16,11 @@ const app = express();
 
 //prepare cross origin for deployment
 app.use(cors(
-    // {
-    //     origin: ["FRONTEND"],
-    //     methods: ["POST", "GET", "PUT", "DELETE"],
-    //     credentials: true
-    // }
+    {
+        origin: ["https://nucleus-plum-zeta.vercel.app"],
+        methods: ["POST", "GET", "PUT", "DELETE"],
+        credentials: true
+    }
 ));
 
 // parse data and require authentication for each endpoint
