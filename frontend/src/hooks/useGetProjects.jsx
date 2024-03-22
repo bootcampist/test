@@ -19,7 +19,7 @@ const useGetProjects = () => {
 
   
   useEffect(() => {
-    axios.get('http://localhost:3002/projects', userData)
+    axios.get('https://server-n.vercel.app/projects', userData)
       .then(response => {
         setProjects(response.data);
         setLoading(false);
