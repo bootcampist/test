@@ -33,7 +33,7 @@ const CreateProjectForm = () => {
   const postData = async () => {
     try {
         // Make POST request to add new project to database
-        const response = await axios.post('http://localhost:3002/projects', formData, userData);
+        const response = await axios.post('https://server-n.vercel.app//projects', formData, userData);
 
         console.log('Project created successfully:', response.data);
       } catch (error) {
@@ -45,7 +45,7 @@ const CreateProjectForm = () => {
   useEffect(()=> {
     const getData = async (id) => {
       try {
-          const response = await axios.get(`http://localhost:3002/projects/${id}`, userData);
+          const response = await axios.get(`https://server-n.vercel.app/projects/${id}`, userData);
           console.log(response.data); 
           setFormData({
             title: response.data.title || '',
@@ -65,7 +65,7 @@ const CreateProjectForm = () => {
 
 const updateData = async (id) => {
   try {
-      const response = await axios.put(`http://localhost:3002/projects/${id}`, formData, userData);
+      const response = await axios.put(`https://server-n.vercel.app/projects/${id}`, formData, userData);
       console.log('update', response.data); return response.data;
   } catch (error) {
       console.error('Error updating project:', error);
