@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuthContext } from '../hooks/useAuthContext';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const CreateProjectForm = () => {
   const {id} = useParams(); //get task id
   const {user} = useAuthContext();
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     title: '',
     targetDate: '',
@@ -93,37 +94,37 @@ const updateData = async (id) => {
       toDoList: '',
       status: 'Not Started'
     });
+    navigate('/projects');
+
   };
 
   return (
-    <form className="form" onSubmit={handleSubmit}>
+    <div className="form-div">
+    <form className="form-container" onSubmit={handleSubmit}>
       <div>
-        <label>Title:</label>
-        <input type="text" className="project-form" name="title" value={formData.title} onChange={handleChange} />
+        <input type="text" placeholder="Title" className="project-form" name="title" value={formData.title} onChange={handleChange} />
       </div>
-      <div>
+      <div className="project-form-label">
         <label>Deadline:</label>
-        <input type="date" className="project-form" name="targetDate" value={formData.targetDate} onChange={handleChange} />
+        <input type="date" placeholder="Deadline" className="project-form" name="targetDate" value={formData.targetDate} onChange={handleChange} />
       </div>
       <div>
-        <label>Description:</label>
-        <textarea name="tDesc" className="project-form" value={formData.tDesc} onChange={handleChange}></textarea>
+        <textarea name="tDesc" placeholder="Description" className="project-form" value={formData.tDesc} onChange={handleChange}></textarea>
       </div>
       <div>
-      <label>To-Do List:</label>
-        <textarea name="toDoList" className="project-form" value={formData.toDoList} onChange={handleChange}></textarea>   
+        <textarea name="toDoList" placeholder="To-Do List" className="project-form" value={formData.toDoList} onChange={handleChange}></textarea>   
       </div>
-      <div>
+      <div className="project-form-label">
         <label>Status:</label>
-        {/* <input type="text" name="status" value={formData.status} onChange={handleChange} /> */}
         <select id="status" name="status" className="project-form" value={formData.status} onChange={handleChange}>
             <option value="Not started">Not Started</option>
             <option value="In progress">In progress</option>
             <option value="Complete">Complete</option>
         </select>
       </div>
-      <button type="submit">Submit</button>
+      <button type="submit" id="project-button">Submit</button>
     </form>
+    </div>
   );
 };
 

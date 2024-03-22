@@ -3,14 +3,17 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useParams } from 'react-router-dom';
+import useGetProjects from '../hooks/useGetProjects';
 
 
 function ProjectCard(props) {
   const {id} = useParams(); //get task id
   const {user} = useAuthContext();
+  const {projects, loading, error} = useGetProjects();
+  let date;
+  let deadline;
 
-
-
+  
   // Set the headers configuration for the request
  const userData = {
   headers: {
@@ -21,33 +24,53 @@ function ProjectCard(props) {
 // Delete project
 const handleDelete = async (project) => {
   try {
-    // Send a DELETE request to the backend API endpoint
-    console.log(props._id)
-    await axios.delete(`https://server-n.vercel.app/projects/${props._id}`);
+    // Send a delete request to the backend API endpoint
+    await axios.delete(`https://server-n.vercel.app/projects/${props._id}`, userData);
     console.log('Project deleted successfully');
   } catch (error) {
     console.error('Error deleting project:', error);
   }
 };
 
+const handleDate = (item) =>{
+  date=item;
+  if (item.length>10) {
+    let number = item.slice(0, 10);
+    date = number.split('-').reverse().join('/');
+  }
+}
+
+const handleDeadline = (input) => {
+  deadline = input
+  let letter;
+  deadline ? letter = input.charAt(4) : deadline;
+  if(letter==='-'){
+    deadline = input.split('-').reverse().join('/');
+  }
+} 
+
+handleDate(props?.tDate)
+handleDeadline(props?.targetDate)
+
+
 
 	return (
     <div id="card-container">
-      <div className="task project-card w-[20%] border-2 rounded-xl p-5 hover:scale-125 duration-500 ease-in-out">
+      <div className="task project-card w-[20%] border-2 rounded-xl p-5 hover:scale-100 duration-500 ease-in-out">
         <div className="flex justify-between items-center mb-5 gap-x-6">
         <Link to={`/newTask/${props._id}`} className="update">
           <h1 className="text-xl lg:text-2xl font-bold">{props.title}</h1>
         </Link>
-          <span className="text-xl select-none text-[#627bb4] dark:text-[#528bac]" onClick={(e) => handleDelete(props._id)}>X</span>
+          {/* <span className="text-xl select-none text-[#627bb4] dark:text-[#528bac]" onClick={(e) => handleDelete(props._id)}>X</span> */}
         </div>
         <div className="flex justify-between items-center mb-5 gap-x-6">
           <div className="flex flex-col">
             <span className="text-xs select-none text-[#627bb4] dark:text-[#528bac]">Created:</span> 
-            <span className="text-xs select-all">{props.tDate}</span>
+            <span className="text-xs select-all">{date}</span>
           </div>
           <div className="flex flex-col items-end">
             <span className="text-sm select-none text-[#627bb4] dark:text-[#528bac]">Deadline:</span>
-            <span className="text-sm select-all">{props.targetDate}</span>
+            <span className="text-sm select-all">{deadline}</span>
           </div>
         </div>
         <p className="text-sm select-none mb-2 text-[#627bb4] dark:text-[#528bac]">Description:</p>
@@ -58,7 +81,9 @@ const handleDelete = async (project) => {
             <li className="text-lg select-all">{item}</li>
           ))}
         </ul>
-        <h2 className="border-2 border-opacity-50 border-[#e6c5ac] bg-[#f6d5bd] bg-opacity-20 px-2 py-2 rounded-lg text-center text-sm">{props.status}</h2>
+          <Link to={`/newTask/${props._id}`} className="update">
+            <h2 className="border-2 border-opacity-50 border-[#e6c5ac] bg-[#f6d5bd] bg-opacity-20 px-2 py-2 rounded-lg text-center text-sm">{props.status}</h2>
+          </Link>
       </div>
     </div>
 	);

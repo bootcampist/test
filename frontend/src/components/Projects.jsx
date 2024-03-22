@@ -1,5 +1,4 @@
-import React from "react";
-// import dbTask from "../SampleTaskFile/SampleTask";
+import { useState, useEffect } from "react";
 import ProjectCard from "./ProjectCard";
 import useGetProjects from '../hooks/useGetProjects';
 import { useAuthContext } from "../hooks/useAuthContext";
@@ -11,12 +10,16 @@ function Projects() {
   const {id} = useParams(); //get task id
   const {user} = useAuthContext();
   const {projects, loading, error} = useGetProjects();
-  const dbTask = projects;
-  
-  console.log('projects', projects)
+  let dbTask = projects;
 
+  useEffect(() => {
 
-  console.log(dbTask);
+  }, [dbTask]);
+
+  // Delete a project
+  const handleProjectDelete = () => {
+    // Update the state to re-render Projects
+  };
 
   return (
     <div className="h-dvh flex flex-col lg:flex-row flex-wrap gap-3 items-center justify-evenly"> 
@@ -33,6 +36,7 @@ function Projects() {
           <li key="toDoList">{toDoList}</li>)}       
 
        status={dbTask.status}
+       
       />
     ))}
     </div>
