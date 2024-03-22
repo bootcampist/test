@@ -23,7 +23,7 @@ const handleDelete = async (project) => {
   try {
     // Send a DELETE request to the backend API endpoint
     console.log(props._id)
-    await axios.delete(`http://localhost:3002/api/projects/${props._id}`);
+    await axios.delete(`https://server-n.vercel.app/projects/${props._id}`);
     console.log('Project deleted successfully');
   } catch (error) {
     console.error('Error deleting project:', error);
