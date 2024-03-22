@@ -1,6 +1,8 @@
 import React from "react";
 import Projects from "../components/Projects";
 import { useParams } from 'react-router-dom';
+import { NavLink, Link } from "react-router-dom";
+
 
 
 function ProjectPage() {
@@ -8,7 +10,11 @@ function ProjectPage() {
 
   	return (
 		<>
-        <Projects />
+            <div className="button-container">
+            <Link to="/newTask"><button className="project-button">+</button></Link>
+            </div>
+            
+            <Projects />
 		</>
   	)
 };
