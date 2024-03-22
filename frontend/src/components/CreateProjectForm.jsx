@@ -33,7 +33,7 @@ const CreateProjectForm = () => {
   const postData = async () => {
     try {
         // Make POST request to add new project to database
-        const response = await axios.post('https://server-n.vercel.app//projects', formData, userData);
+        const response = await axios.post('https://server-n.vercel.app/projects', formData, userData);
 
         console.log('Project created successfully:', response.data);
       } catch (error) {
