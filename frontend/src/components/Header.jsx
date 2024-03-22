@@ -33,6 +33,10 @@ function Header() {
 							<CircleCheckBig size={15} className="inline lg:me-2" />
 							<span className="hidden lg:block">Tasks</span> 
 						</NavLink>
+						<NavLink to="/projects" className={({ isActive }) => isActive ? activeBtnClasses : btnClasses}>
+							<CircleCheckBig size={15} className="inline lg:me-2" />
+							<span className="hidden lg:block">Projects</span> 
+						</NavLink>
 						<NavLink to="/stats" className={({ isActive }) => isActive ? `${activeBtnClasses} me-4 lg:me-10` : `${btnClasses} me-4 lg:me-10`}>
 							<PieChart size={15} className="inline lg:me-2" />
 							<span className="hidden lg:block">Stats</span> 
