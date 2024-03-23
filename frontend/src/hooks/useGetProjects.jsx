@@ -28,7 +28,7 @@ const useGetProjects = () => {
         setError(error);
         setLoading(false);
       });
-  }, [loading]);
+  }, [loading, projects]);
 
   return { projects, loading, setLoading, error };
 };
