@@ -21,8 +21,7 @@ function ProjectCard(props) {
 // Delete project
 const handleDelete = async (project) => {
   try {
-    // await axios.delete(`https://server-n.vercel.app/projects/${props._id}`, userData);
-    await axios.delete(`http://localhost:3002/projects/${project}`, userData);
+    await axios.delete(`https://server-n.vercel.app/projects/${props._id}`, userData);
     console.log('Project deleted successfully');
   } catch (error) {
     console.error('Error deleting project:', error);
