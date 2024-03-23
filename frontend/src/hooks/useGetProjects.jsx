@@ -17,22 +17,20 @@ const useGetProjects = () => {
     }
   };
 
-  
+//   Get the projects from the database each time the loading value changes
   useEffect(() => {
-    axios.get('https://server-n.vercel.app/projects', userData)
+    axios.get('http://localhost:3002/projects', userData)
       .then(response => {
         setProjects(response.data);
         setLoading(false);
-        console.log(projects)
       })
       .catch(error => {
-        console.error('Error fetching projects:', error);
         setError(error);
         setLoading(false);
       });
-  }, []);
+  }, [loading]);
 
-  return { projects, loading, error };
+  return { projects, loading, setLoading, error };
 };
 
 export default useGetProjects;
