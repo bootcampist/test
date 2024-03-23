@@ -2,11 +2,16 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useAuthContext } from '../hooks/useAuthContext';
 import { useParams, useNavigate } from 'react-router-dom';
+import useGetProjects from '../hooks/useGetProjects';
+
 
 const CreateProjectForm = () => {
   const {id} = useParams(); //get task id
   const {user} = useAuthContext();
   const navigate = useNavigate()
+  const {projects, loading, setLoading, error} = useGetProjects();
+  
+
   const [formData, setFormData] = useState({
     title: '',
     targetDate: '',
@@ -20,9 +25,6 @@ const CreateProjectForm = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-//   const format = () => {
-//     setFormData({ ...formData, [name]: name.includes('Date') ? value.split('-').join('/') : value });
-//   }
   // Set the headers configuration for the request
   const userData = {
     headers: {
@@ -33,8 +35,12 @@ const CreateProjectForm = () => {
 
   const postData = async () => {
     try {
+
+
         // Make POST request to add new project to database
-        const response = await axios.post('https://server-n.vercel.app/projects', formData, userData);
+        // const response = await axios.post('https://server-n.vercel.app/projects', formData, userData);
+        const response = await axios.post('http://localhost:3002/projects', formData, userData);
+
 
         console.log('Project created successfully:', response.data);
       } catch (error) {
@@ -46,8 +52,9 @@ const CreateProjectForm = () => {
   useEffect(()=> {
     const getData = async (id) => {
       try {
-          const response = await axios.get(`https://server-n.vercel.app/projects/${id}`, userData);
-          console.log(response.data); 
+        //   const response = await axios.get(`https://server-n.vercel.app/projects/${id}`, userData);
+        const response = await axios.get(`http://localhost:3002/projects/${id}`, userData);
+
           setFormData({
             title: response.data.title || '',
             targetDate: response.data.targetDate || '',
@@ -66,7 +73,9 @@ const CreateProjectForm = () => {
 
 const updateData = async (id) => {
   try {
-      const response = await axios.put(`https://server-n.vercel.app/projects/${id}`, formData, userData);
+    //   const response = await axios.put(`https://server-n.vercel.app/projects/${id}`, formData, userData);
+    const response = await axios.put(`http://localhost:3002/projects/${id}`, formData, userData);
+
       console.log('update', response.data); return response.data;
   } catch (error) {
       console.error('Error updating project:', error);
@@ -74,7 +83,6 @@ const updateData = async (id) => {
   }
 };
   
-
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -94,6 +102,7 @@ const updateData = async (id) => {
       toDoList: '',
       status: 'Not Started'
     });
+    setLoading(true);
     navigate('/projects');
 
   };
